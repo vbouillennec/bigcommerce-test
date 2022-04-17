@@ -19,7 +19,7 @@ const ProductImage = (props) => {
 			<ul>
 				{images.map((image, key) => {
 					if(image.is_thumbnail)
-						return (<img key={key} src={image.url_thumbnail} class="img-fluid"></img>)
+						return (<img key={key} src={image.url_thumbnail} className="img-fluid"></img>)
 				})}
 			</ul>
 		</div>

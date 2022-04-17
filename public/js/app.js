@@ -5553,6 +5553,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Pagination */ "./resources/js/components/Pagination.js");
 /* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SearchBar */ "./resources/js/components/SearchBar.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5606,7 +5614,6 @@ var Products = function Products() {
   var filteredProd = products.filter(function (val) {
     if (searchTerm == '') return val;else if (val.name.toLowerCase().includes(search.toLowerCase()) || val.sku.toLowerCase().includes(search.toLowerCase())) return val;
   });
-  console.log(filteredProd);
   var currentProd = filteredProd.slice(indexOfFirstProd, indexOfLastProd);
 
   var paginate = function paginate(pageNumber) {
@@ -5616,6 +5623,16 @@ var Products = function Products() {
   var searchTerm = function searchTerm(e) {
     setCurrentPage(1);
     setSearch(e);
+  };
+
+  var changeQuantity = function changeQuantity(productID, quantity) {
+    var prods = _toConsumableArray(products);
+
+    var iProd = prods.findIndex(function (obj) {
+      return obj.id == productID;
+    });
+    prods[iProd].quantity = quantity;
+    setProducts(prods);
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -5641,7 +5658,7 @@ var Products = function Products() {
                 id: product.id
               })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-              className: "col-9",
+              className: "col-6",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
                 className: "card-title",
                 children: product.name
@@ -5649,6 +5666,28 @@ var Products = function Products() {
                 className: "card-text",
                 children: product.sku
               })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "col-3 align-self-center",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "input-group mb-3",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "input-group-prepend",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                    className: "input-group-text",
+                    id: "inputGroup-sizing-default",
+                    children: "Quantit\xE9"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  type: "number",
+                  className: "form-control",
+                  "aria-label": "Default",
+                  "aria-describedby": "inputGroup-sizing-default",
+                  onChange: function onChange(e) {
+                    return changeQuantity(product.id, e.target.value);
+                  },
+                  value: product.quantity ? product.quantity : '0'
+                })]
+              })
             })]
           })
         })

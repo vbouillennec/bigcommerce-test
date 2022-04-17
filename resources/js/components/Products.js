@@ -22,47 +22,66 @@ const Products = () => {
 
 	const indexOfLastProd = currentPage * prodPerPage;
 	const indexOfFirstProd = indexOfLastProd - prodPerPage;
-	const currentProd = products.slice(indexOfFirstProd, indexOfLastProd);
+	const filteredProd = products.filter((val) => {
+		if(searchTerm == '')
+			return val
+		else if (val.name.toLowerCase().includes(search.toLowerCase()) || val.sku.toLowerCase().includes(search.toLowerCase()))
+			return val
+	});
+	const currentProd = filteredProd.slice(indexOfFirstProd, indexOfLastProd);
 
 	const paginate = (pageNumber) => {
 		setCurrentPage(pageNumber);
 	}
 
 	const searchTerm = (e) => {
+		setCurrentPage(1);
 		setSearch(e);
 	}
 
+	const changeQuantity = (productID, quantity) => {
+		let prods = [...products];
+		let iProd = prods.findIndex((obj => obj.id == productID));
+		prods[iProd].quantity = quantity;
+		setProducts(prods);
+	}
+
   	return (
-		<div class="container">
-			<div class="row justify-content-md-center m-4">
-				<div class="col-md-6 ">
+		<div className="container">
+			<div className="row justify-content-md-center m-4">
+				<div className="col-md-6 ">
 					<SearchBar searchTerm={searchTerm}/>
 
 				</div>
 			</div>
-			{currentProd.filter((val) => {
-				if(searchTerm == '')
-					return val
-				else if (val.name.toLowerCase().includes(search.toLowerCase()) || val.sku.toLowerCase().includes(search.toLowerCase()))
-					return val
-			})
+			{currentProd
 			.map((product, key) => {
 				return (
-					<div key={key} class="card m-2">
-						<div class="card-body">
-							<div class="row">
-								<div class="col">
+					<div key={key} className="card m-2">
+						<div className="card-body">
+							<div className="row">
+								<div className="col">
 									<ProductImage id={product.id}/>
 								</div>
-								<div class="col-9">
-									<h5 class="card-title">{product.name}</h5>
-									<p class="card-text">{product.sku}</p>
+								<div className="col-6">
+									<h5 className="card-title">{product.name}</h5>
+									<p className="card-text">{product.sku}</p>
+								</div>
+								<div className="col-3 align-self-center">
+									<div className="input-group mb-3">
+										<div className="input-group-prepend">
+											<span className="input-group-text" id="inputGroup-sizing-default">Quantité</span>
+										</div>
+										<input type="number" className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+										onChange={(e) => changeQuantity(product.id, e.target.value)}
+										value={product.quantity ? product.quantity : '0'}/>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>)
 				})}
-			<Pagination prodPerPage={prodPerPage} totalProd={products.length} paginate={paginate}/>
+			<Pagination prodPerPage={prodPerPage} totalProd={filteredProd.length} paginate={paginate}/>
 		</div>
   	);
 };

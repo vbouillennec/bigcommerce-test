@@ -5511,7 +5511,6 @@ var ProductImage = function ProductImage(props) {
       images = _React$useState2[0],
       setImages = _React$useState2[1];
 
-  console.log(props.id);
   var baseURL = "http://localhost/images/" + props.id;
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     axios__WEBPACK_IMPORTED_MODULE_1___default().get(baseURL).then(function (response) {
@@ -5523,7 +5522,8 @@ var ProductImage = function ProductImage(props) {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("ul", {
       children: images.map(function (image, key) {
         if (image.is_thumbnail) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-          src: image.url_thumbnail
+          src: image.url_thumbnail,
+          "class": "img-fluid"
         }, key);
       })
     })
@@ -5551,7 +5551,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _ProductImage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProductImage */ "./resources/js/components/ProductImage.js");
 /* harmony import */ var _Pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Pagination */ "./resources/js/components/Pagination.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SearchBar */ "./resources/js/components/SearchBar.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5563,6 +5564,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -5587,6 +5589,11 @@ var Products = function Products() {
       prodPerPage = _React$useState6[0],
       setProdPerPage = _React$useState6[1];
 
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(''),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      search = _React$useState8[0],
+      setSearch = _React$useState8[1];
+
   var baseURL = "http://localhost/products";
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
     axios__WEBPACK_IMPORTED_MODULE_1___default().get(baseURL).then(function (response) {
@@ -5602,26 +5609,40 @@ var Products = function Products() {
     setCurrentPage(pageNumber);
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+  var searchTerm = function searchTerm(e) {
+    setSearch(e);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     "class": "container",
-    children: [currentProd.map(function (product, key) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-        "class": "card m-4",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      "class": "row justify-content-md-center m-4",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        "class": "col-md-6 ",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_SearchBar__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          searchTerm: searchTerm
+        })
+      })
+    }), currentProd.filter(function (val) {
+      if (searchTerm == '') return val;else if (val.name.toLowerCase().includes(search.toLowerCase()) || val.sku.toLowerCase().includes(search.toLowerCase())) return val;
+    }).map(function (product, key) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        "class": "card m-2",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
           "class": "card-body",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             "class": "row",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               "class": "col",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ProductImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProductImage__WEBPACK_IMPORTED_MODULE_2__["default"], {
                 id: product.id
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-              "class": "col-8",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h5", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              "class": "col-9",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
                 "class": "card-title",
                 children: product.name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
                 "class": "card-text",
                 children: product.sku
               })]
@@ -5629,7 +5650,7 @@ var Products = function Products() {
           })
         })
       }, key);
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
       prodPerPage: prodPerPage,
       totalProd: products.length,
       paginate: paginate
@@ -5638,6 +5659,39 @@ var Products = function Products() {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Products);
+
+/***/ }),
+
+/***/ "./resources/js/components/SearchBar.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/SearchBar.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+var SearchBar = function SearchBar(_ref) {
+  var searchTerm = _ref.searchTerm;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+    type: "search",
+    "class": "form-control",
+    placeholder: "Recherche...",
+    onChange: function onChange(e) {
+      return searchTerm(e.target.value);
+    }
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchBar);
 
 /***/ }),
 

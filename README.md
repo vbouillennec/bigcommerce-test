@@ -30,3 +30,5 @@ docker run --rm \
 `sail npm run dev`
 
 Et voilà, il ne vous reste plus qu'à ouvrir votre navigateur pour vous rendre sur la page : http://localhost
+
+Le "preview code" pour accéder au store front est : `vbzx1tqmel`

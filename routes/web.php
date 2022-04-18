@@ -21,10 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\GetController@index');
 
 Route::get('/products', 'App\Http\Controllers\GetController@products');
+
 Route::get('/images/{id}', 'App\Http\Controllers\GetController@images');
 
-Route::post('count', function (Request $request) {
-    return response()->json([
-        'message' => $request->message,
-    ]);
-});
+Route::post('/cart', 'App\Http\Controllers\PostController@cart');

@@ -6,62 +6,33 @@ use Illuminate\Support\Facades\Http;
 
 class GetController extends Controller
 {
+	const ACCESS_TOKEN = '8mu9dgvlpxvagwc8kr97y7gdovfwebd';
+	const STORE_HASH = 'b5cvpaoito';
+
 	public function index()
 	{
-		$access_token = '8mu9dgvlpxvagwc8kr97y7gdovfwebd';
-		$store_hash = 'b5cvpaoito';
-
 		$response = Http::withHeaders([
-			'X-Auth-Token'=> $access_token,
-		])->get('https://api.bigcommerce.com/stores/'.$store_hash.'/v3/catalog/products');
-
-		$test = 'lorem ipsum';
+			'X-Auth-Token'=> self::ACCESS_TOKEN,
+		])->get('https://api.bigcommerce.com/stores/'.self::STORE_HASH.'/v3/catalog/products');
 
 		return view('welcome');
-		// return $response->json();
-
-		// $data = implode(" ", $response->json());
-
-		// return view('welcome', [
-		// 	'data' => $data
-		// ]);
 	}
 
 	public function products()
 	{
-		$access_token = '8mu9dgvlpxvagwc8kr97y7gdovfwebd';
-		$store_hash = 'b5cvpaoito';
-
 		$response = Http::withHeaders([
-			'X-Auth-Token'=> $access_token,
-		])->get('https://api.bigcommerce.com/stores/'.$store_hash.'/v3/catalog/products');
+			'X-Auth-Token'=> self::ACCESS_TOKEN,
+		])->get('https://api.bigcommerce.com/stores/'.self::STORE_HASH.'/v3/catalog/products');
 
 		return $response->json();
-		// return $response->json();
-
-		// $data = implode(" ", $response->json());
-
-		// return view('welcome', [
-		// 	'data' => $data
-		// ]);
 	}
 
 	public function images($productID)
 	{
-		$access_token = '8mu9dgvlpxvagwc8kr97y7gdovfwebd';
-		$store_hash = 'b5cvpaoito';
-
 		$response = Http::withHeaders([
-			'X-Auth-Token'=> $access_token,
-		])->get('https://api.bigcommerce.com/stores/'.$store_hash.'/v3/catalog/products/'.$productID.'/images');
+			'X-Auth-Token'=> self::ACCESS_TOKEN,
+		])->get('https://api.bigcommerce.com/stores/'.self::STORE_HASH.'/v3/catalog/products/'.$productID.'/images');
 
 		return $response->json();
-		// return $response->json();
-
-		// $data = implode(" ", $response->json());
-
-		// return view('welcome', [
-		// 	'data' => $data
-		// ]);
 	}
 }

@@ -46,6 +46,23 @@ const Products = () => {
 		setProducts(prods);
 	}
 
+	const newCart = () => {
+		let data = [];
+		products.forEach((product) => {
+			if(product.quantity && product.quantity > 0)
+				data.push({"product_id": product.id, "quantity": product.quantity});
+		});
+		const line_items = {
+			'line_items': data
+		};
+
+		axios.post("http://localhost/cart", line_items)
+		.then((response) => {
+			const cartUrl = response.data;
+			return window.location = cartUrl;
+		});
+	}
+
   	return (
 		<div className="container">
 			<div className="row justify-content-md-center m-4">
@@ -81,7 +98,9 @@ const Products = () => {
 						</div>
 					</div>)
 				})}
-			<Pagination prodPerPage={prodPerPage} totalProd={filteredProd.length} paginate={paginate}/>
+			<Pagination prodPerPage={prodPerPage} totalProd={filteredProd.length} paginate={paginate} newCart={newCart}/>
+
+			
 		</div>
   	);
 };

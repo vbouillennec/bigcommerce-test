@@ -5439,10 +5439,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var Pagination = function Pagination(_ref) {
   var prodPerPage = _ref.prodPerPage,
       totalProd = _ref.totalProd,
-      paginate = _ref.paginate;
+      paginate = _ref.paginate,
+      newCart = _ref.newCart;
   var pageNumbers = [];
 
   for (var i = 1; i <= Math.ceil(totalProd / prodPerPage); i++) {
@@ -5450,9 +5452,9 @@ var Pagination = function Pagination(_ref) {
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("nav", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("ul", {
-      className: "pagination justify-content-md-center",
-      children: pageNumbers.map(function (number) {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("ul", {
+      className: "pagination justify-content-center",
+      children: [pageNumbers.map(function (number) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("li", {
           className: "page-item",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("a", {
@@ -5464,7 +5466,16 @@ var Pagination = function Pagination(_ref) {
             children: number
           })
         }, number);
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        className: "col-1"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        type: "button",
+        className: "ml-4 btn btn-primary",
+        onClick: function onClick() {
+          return newCart();
+        },
+        children: "Cr\xE9er un panier"
+      })]
     })
   });
 };
@@ -5635,6 +5646,23 @@ var Products = function Products() {
     setProducts(prods);
   };
 
+  var newCart = function newCart() {
+    var data = [];
+    products.forEach(function (product) {
+      if (product.quantity && product.quantity > 0) data.push({
+        "product_id": product.id,
+        "quantity": product.quantity
+      });
+    });
+    var line_items = {
+      'line_items': data
+    };
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://localhost/cart", line_items).then(function (response) {
+      var cartUrl = response.data;
+      return window.location = cartUrl;
+    });
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "container",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
@@ -5695,7 +5723,8 @@ var Products = function Products() {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Pagination__WEBPACK_IMPORTED_MODULE_3__["default"], {
       prodPerPage: prodPerPage,
       totalProd: filteredProd.length,
-      paginate: paginate
+      paginate: paginate,
+      newCart: newCart
     })]
   });
 };

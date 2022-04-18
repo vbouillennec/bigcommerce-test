@@ -31,4 +31,4 @@ docker run --rm \
 
 Et voilà, il ne vous reste plus qu'à ouvrir votre navigateur pour vous rendre sur la page : http://localhost
 
-Le "preview code" pour accéder au store front est : `vbzx1tqmel`
+Le "preview code" pour accéder au store front est : `vbzx1tqmel`  (nécessaire en v4)

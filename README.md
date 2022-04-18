@@ -1,4 +1,4 @@
-# Guide d'installation du projet:
+# Guide d'installation du projet
 
 Pour installer le projet il faut utiliser le terminal WSL2 (ubuntu) disponible sous windows : 
 https://docs.microsoft.com/fr-fr/windows/wsl/install
